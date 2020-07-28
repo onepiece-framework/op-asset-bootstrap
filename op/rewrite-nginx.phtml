@@ -1,0 +1,81 @@
+<?php
+/** op-module-bootstrap:/op/rewrite-nginx.phtml
+ *
+ * @created   2018-11-06
+ * @version   1.0
+ * @package   op-module-bootstrap
+ * @author    Tomoaki Nagahara <tomoaki.nagahara@gmail.com>
+ * @copyright Tomoaki Nagahara All right reserved.
+ */
+//	Init
+$name     = $_SERVER['SERVER_NAME'];
+$port     = $_SERVER['SERVER_PORT'];
+$doc_root = $_SERVER['DOCUMENT_ROOT'];
+$app_name   = '@app-skeleton';
+$app_root   = OP\RootPath('app');
+$asset_root = OP\RootPath('asset');
+
+//	Calc asset/app.php file path.
+if( strpos($asset_root, $doc_root) === 0 ){
+	$app_root   = substr($app_root, strlen($doc_root));
+	$asset_root = '$document_root' . $app_root;
+	$asset_url  = $app_root . 'asset/';
+}
+
+//	Switch fast-cgi params file name.
+switch( PHP_OS ){
+	case 'Darwin':
+		$fastcgi_params = 'fastcgi.conf';
+		break;
+	default:
+		$fastcgi_params = 'fastcgi_params';
+}
+
+?>
+<h1 data-i18n="true">How to boot the onepiece-framework at the Nginx web server.</h1>
+<p data-i18n="true">
+	This is server directive example.<br/>
+	Please change <b style="color:red;" data-i18n="false">root</b> and <b style="color:red;" data-i18n="false">fastcgi_pass</b> according to your environment.
+</p>
+<pre><code>
+http {
+    server {
+        server_name  <?= $name ?>;
+        listen       <?= $port ?>;
+
+        #   Application root
+        location <?= $app_root ?> {
+            #   Inside location at location
+
+            #   Inaccessible pages
+            location ~ ([^\w]\.ht<?php if( isset($asset_url) ): ?>>|<?= $asset_url ?><?php endif; ?>) {
+                error_page  403     @app-skeleton;
+                deny        all;
+            }
+<!--
+            #   Directly access files
+            location ~ [png|jpe?g|jp2|heic|exr|gif|tiff|ico|js|css|pdf]$ {
+                root        <?= $doc_root ?>;
+                try_files   $uri    @app-skeleton;
+            }
+ -->
+            #   Other pages
+            location <?= $app_root ?> {
+                try_files   null    @app-skeleton;
+            }
+        }
+
+        #   Transfer to onepiece-framework app-skeleton
+        location <?= $app_name ?> {
+            #   Include default fastcgi_params settings.
+            include         <?= $fastcgi_params ?>;
+            <span style="color:red;">root            <?= $doc_root ?>;</span>
+            <span style="color:red;">fastcgi_pass    127.0.0.1:9000;</span>
+            #   Overwrite fastcgi_params file settings.
+            fastcgi_param   SCRIPT_FILENAME <?= $asset_root ?>app.php;
+            fastcgi_param   PHP_VALUE       "catch_workers_output=no; display_errors=on";
+            fastcgi_param   REDIRECT_STATUS $status;
+        }
+    }
+}
+</code></pre>
