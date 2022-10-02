@@ -22,10 +22,13 @@
 		</style>
 	</head>
 	<body>
-		<section>
+		<section class="margin left right">
 			<h1>Not initializing git submodule</h1>
 			<p>Execute the following command.</p>
-			<pre>sh asset/gitsubmodule-init.sh</pre>
+			<div class="code">
+				<code>cd <?php echo dirname($_SERVER['SCRIPT_FILENAME']) ?></code>
+				<code>sh ./asset/git/submodule/init.sh</code>
+			</div>
 		</section>
 	</body>
 </html>
