@@ -12,6 +12,7 @@
 $rewrite_base = explode('?', $_SERVER['REQUEST_URI'])[0];
 
 //	Search app.php.
+/* Why do need this code?
 do{
 	//	Check if document root.
 	if( $rewrite_base === '/' ){
@@ -27,6 +28,7 @@ do{
 	}
 
 }while( $rewrite_base = dirname($rewrite_base) );
+*/
 
 //	Calc app root.
 $app_root = rtrim($_SERVER['DOCUMENT_ROOT'],'/') . rtrim($rewrite_base,'/').'/';
