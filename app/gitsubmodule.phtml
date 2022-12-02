@@ -7,14 +7,44 @@
  * @author    Tomoaki Nagahara <tomoaki.nagahara@gmail.com>
  * @copyright Tomoaki Nagahara All right reserved.
  */
+
+/** namespace
+ *
+ */
+namespace OP;
+
+//	..
+$m1 = 'Not initializing git submodule';
+$m2 = 'Execute the following command.';
+$c1 = 'cd '.dirname($_SERVER['SCRIPT_FILENAME']);
+$c2 = 'sh ./asset/git/submodule/init.sh ' . _BRANCH_;
+
+//	...
+if( basename($_SERVER['SCRIPT_FILENAME']) === 'ci.php' ){
+	echo '0' . PHP_EOL;
+	echo $c1 . PHP_EOL;
+	echo $c2 . PHP_EOL;
+	return;
+}
+
+//	...
+if( isset($_SERVER['SHELL']) ){
+	echo PHP_EOL;
+	echo $m1 . PHP_EOL;
+	echo $m2 . PHP_EOL;
+	echo PHP_EOL;
+	echo '1: ' . $c1 . PHP_EOL;
+	echo '2: ' . $c2 . PHP_EOL;
+	return;
+}
 ?>
 <?php include(__DIR__.'/../html_head.phtml') ?>
 		<section>
-			<h1>Not initializing git submodule</h1>
-			<p>Execute the following command.</p>
-			<div class="code">
-				<code>cd <?php echo dirname($_SERVER['SCRIPT_FILENAME']) ?></code>
-				<code>sh ./asset/git/submodule/init.sh</code>
-			</div>
+			<h1><?= $m1 ?></h1>
+			<p> <?= $m2 ?></p>
+			<ol>
+				<li><code class="code"><?= $c1 ?></code></li>
+				<li><code class="code"><?= $c2 ?></code></li>
+			</ol>
 		</section>
 <?php include(__DIR__.'/../html_foot.phtml') ?>
