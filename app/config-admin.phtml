@@ -12,34 +12,40 @@
 namespace OP;
 
 //	...
-$path = OP::MetaPath('asset:/config/admin.php');
+$path = OP::MetaPath('asset:/config/.admin.php');
 
 //	...
 $file = file_get_contents($path);
-$file = Encode($file);
-$file = preg_replace(['|\/\*\* .+|','| \*.+|','| \*|','|\n/\*|','|\n\*/|'], '', $file);
-$file = preg_replace(['|//\t|','|\t|','|\n+|','|,\n|','|,\n\n\]|'], ['//  ','    ',"\n",",\n\n",",\n]"], $file);
+//	Remove only 1st multi line comment.
+$file = preg_replace('/\/\*\*[\s\S]*?\*\/\n/', '', $file, 1);
+//	Remove /* and */
+$file = str_replace(["\n/*\n","\n*/\n"], "\n", $file);
 
 //	...
 if( Env::isCI() ){
-	//	...
-	if(!file_put_contents(OP::MetaPath('asset:/config/').'_admin.php',  OP::Decode($file)) ){
-		echo 'Could not write to this file. (asset:/config/_admin.php)';
-		return false;
+	//	Create admin config file.
+	if(!$io = file_put_contents($path = OP::MetaPath('asset:/config/').'_admin.php',  OP::Decode($file)) ){
+		echo "Could not write to this file. ({$path})";
 	}
-	//	...
-	return true;
+	return $io ? true: false;
 }
+
+//	...
+if( Env::isShell() ){
+	echo "Please edit this file: {$path}\n";
+	return false;
+}
+
 ?>
 <?php include(__DIR__.'/../html_head.phtml') ?>
 		<section>
 			<h1>The admin config file has not been set.</h1>
 
 			<p>File path is</p>
-			<div class="code"><code><?= $path ?></code></div>
+			<div class="code"><code><?= OP::MetaPath('asset:/config/admin.php') ?></code></div>
 
 			<p>Configuration is</p>
-			<div class="code"><pre><code><?= $file ?></code></pre></div>
+			<div class="code"><pre><code><?= OP::Encode($file) ?></code></pre></div>
 		</section>
 <?php include(__DIR__.'/../html_foot.phtml') ?>
 <?php
