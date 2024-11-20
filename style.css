@@ -16,11 +16,16 @@ body {
 }
 
 h1 {
-	font-size: 1.5vw;
+	font-size: 3vw;
+}
+
+h2 {
+	font-size: 2.5vw;
 }
 
 li {
-	margin-bottom: 1em;
+	margin:  0;
+	padding: 0.2em;
 }
 
 pre {
@@ -30,6 +35,14 @@ pre {
 code {
 	display: block;
 	font-family: "Courier New", Consolas, Courier, Monaco, monospace;
+}
+
+.red {
+	color: red;
+}
+
+.bold {
+	font-weight: bold;
 }
 
 .code {
