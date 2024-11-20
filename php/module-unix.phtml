@@ -7,19 +7,47 @@
  * @author    Tomoaki Nagahara <tomoaki.nagahara@gmail.com>
  * @copyright Tomoaki Nagahara All right reserved.
  */
-//	...
-$t = explode('.', PHP_VERSION);
-$v = $t[0].$t[1];
 
 //	...
-$redhat = file_exists('/etc/redhat-release') ?? false;
-$remi   = $v > 53 ? true: false;
-$repo   = $remi ? "--enablerepo=remi-php{$v}": ' ';
+$path = '/etc/os-release';
+
+//	...
+if(!file_exists($path) ){
+	echo "This file does not exists: `{$path}`";
+	return;
+}
+
+//	...
+if( $file = file_get_contents($path) ){
+	foreach( explode("\n", $file) as $line ){
+		list($key, $val) = explode('=', $line);
+		$info[$key] = $val;
+	}
+}
+
+//	...
+switch( $info['ID'] ?? null ){
+	case 'redhat':
+		$pkg = 'yum';
+		$sys = 'service';
+		break;
+
+	case 'debian':
+		$pkg = 'apt';
+		$sys = 'systemctl';
+		break;
+}
+
+//	...
+switch( $_SERVER['SERVER_SOFTWARE'] ){
+	case 'LiteSpeed':
+		$ws  = 'lsws';
+		$php = 'lsphp' . PHP_MAJOR_VERSION . PHP_MINOR_VERSION;
+		break;
+}
 
 ?>
-<pre><code>
-<?php if( $redhat ): ?>
-sudo yum<?= $repo ?>install php-<?= _OP_APP_BOOTSTRAP_ . PHP_EOL ?>
-sudo service httpd restart
-<?php endif; ?>
+<pre><code><?php ?>
+sudo <?= $pkg ?> install <?= $php ?>-<?= _OP_APP_BOOTSTRAP_ . PHP_EOL ?>
+sudo <?= $sys ?> restart <?= $ws ?>
 </code></pre>
