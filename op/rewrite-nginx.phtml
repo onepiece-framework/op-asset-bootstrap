@@ -32,10 +32,11 @@ switch( PHP_OS ){
 }
 
 ?>
-<h1 data-i18n="true">How to boot the onepiece-framework at the Nginx web server.</h1>
-<p data-i18n="true">
+<div data-translate="popup">
+<h1>How to boot the onepiece-framework at the Nginx web server.</h1>
+<p>
 	This is server directive example.<br/>
-	Please change <b style="color:red;" data-i18n="false">root</b> and <b style="color:red;" data-i18n="false">fastcgi_pass</b> according to your environment.
+	Please change <b style="color:red;">root</b> and <b style="color:red;">fastcgi_pass</b> according to your environment.
 </p>
 <pre><code>
 http {
@@ -46,6 +47,9 @@ http {
         #   Application root
         location <?= $app_root ?> {
             #   Inside location at location
+            location ~ \.php$ {
+                try_files   null    @app-skeleton;
+            }
 
             #   Inaccessible pages
             location ~ ([^\w]\.ht<?php if( isset($asset_url) ): ?>>|<?= $asset_url ?><?php endif; ?>) {
@@ -79,3 +83,4 @@ http {
     }
 }
 </code></pre>
+</div>
