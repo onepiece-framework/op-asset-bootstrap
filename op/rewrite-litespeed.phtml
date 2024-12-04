@@ -1,0 +1,72 @@
+<?php
+/**	op-module-bootstrap:/op/rewrite-litespeed.phtml
+ *
+ * @created    2024-11-19
+ * @version    1.0
+ * @package    op-module-bootstrap
+ * @author     Tomoaki Nagahara <tomoaki.nagahara@gmail.com>
+ * @copyright  Tomoaki Nagahara All right reserved.
+ */
+
+/**	Declare strict
+ *
+ */
+declare(strict_types=1);
+
+/**	namespace
+ *
+ */
+namespace OP;
+
+//	Generate app root.
+$doc = realpath($_SERVER['DOCUMENT_ROOT']);
+$dir = realpath(__DIR__); // git:/asset/bootstrap/op/
+$pos = strpos($dir, $doc);
+if( $pos === false ){
+	//	asset dir is not under doc root.
+	$app_root = '/';
+}else if( $pos === 0 ){
+	$dir = dirname($dir); // git:/asset/bootstrap/
+	$dir = dirname($dir); // git:/asset/
+	$dir = dirname($dir); // git:/
+	$app_root = rtrim($dir, '/') . '/';
+}else{
+	echo "<p>app root is not found.</p>";
+	return;
+}
+
+?>
+<div data-translate="popup">
+<h1>How to boot the onepiece-framework at the LiteSpeed Web Server.</h1>
+<ol>
+	<li>Click `Virtual Hosts` from Left menu</li>
+	<li>Click target virtual host name</li>
+	<li>Click `Rewrite` tab</li>
+	<li>Change the values ​​as follows:
+		<ol>
+			<li>Enable Rewrite : `Yes`</li>
+			<li>Rewrite Rules:
+<pre><code>
+# Enable rewrite.
+RewriteEngine On
+
+# This is base directory (It is app root.)
+RewriteBase <?= $app_root . PHP_EOL ?>
+
+# If file does not exists, Dispatched to app.php.
+<?php if( $app_root !== '/' ): ?>
+RewriteCond %{REQUEST_URI} <?= $app_root . PHP_EOL ?>
+<?php endif ?>
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteRule . <?= $app_root ?>app.php [END]
+
+# If the file exists, Dispatch only this extension.
+RewriteCond %{REQUEST_FILENAME} -f
+RewriteCond %{REQUEST_URI} <?= $app_root ?>.+\.(php|html|js|css|txt|png)$
+RewriteRule . <?= $app_root ?>app.php [END]
+</code></pre>
+			</li>
+		</ol>
+	</li>
+</ol>
+</div>
