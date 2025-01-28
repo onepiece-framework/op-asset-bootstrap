@@ -54,12 +54,12 @@ RewriteEngine On
 
 # If file does not exists, Dispatched to app.php.
 RewriteCond %{REQUEST_FILENAME} !-f
-RewriteRule . <?= rtrim($_SERVER['DOCUMENT_ROOT'],'/') ?>/app.php [END]
+RewriteRule . <?= rtrim($_SERVER['REQUEST_URI'],'/') ?>/app.php [END]
 
 # If the file exists, Dispatch only this extension.
 RewriteCond %{REQUEST_FILENAME} -f
 RewriteCond %{REQUEST_URI} \.(php|html|js|css|txt)$
-RewriteRule . <?= rtrim($_SERVER['DOCUMENT_ROOT'],'/') ?>/app.php [END]
+RewriteRule . <?= rtrim($_SERVER['REQUEST_URI'],'/') ?>/app.php [END]
 </code></pre>
 			</li>
 		</ol>
