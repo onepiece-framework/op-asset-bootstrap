@@ -1,27 +1,15 @@
 <?php
-/** op-module-bootstrap:/php/module.phtml
+/** op-asset-bootstrap:/template/php/module.phtml
  *
  * @created   2016-11-16
+ * @moved     2025-04-12
  * @version   1.0
- * @package   op-module-bootstrap
+ * @package   op-asset-bootstrap
  * @author    Tomoaki Nagahara <tomoaki.nagahara@gmail.com>
  * @copyright Tomoaki Nagahara All right reserved.
  */
 ?>
-<!doctype html>
-<html>
-	<head>
-		<style>
-		pre {
-			margin:0 1em;
-			padding:0.5em;
-			background-color:#dfdfdf;
-			border: 1px solid #cfcfcf;
-			border-radius: 0.25em;
-		}
-		</style>
-	</head>
-	<body>
+<?php require(__DIR__.'/../html_head.phtml') ?>
 		<section>
 			<h1>Does not install php-<?= _OP_APP_BOOTSTRAP_ ?> module.</h1>
 			<p>Please install php-<?= _OP_APP_BOOTSTRAP_ ?> module.</p>
@@ -44,12 +32,9 @@
 					break;
 
 				default:
-					var_dump(PHP_OS);
+					echo PHP_OS . PHP_EOL;
 					break;
 			}
 			?>
 		</section>
-	</body>
-</html>
-<?php
-exit(1);
+<?php require(__DIR__.'/../html_foot.phtml') ?>

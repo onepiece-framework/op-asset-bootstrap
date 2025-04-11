@@ -1,9 +1,9 @@
 <?php
-/** op-module-bootstrap:/php/module.php
+/** op-asset-bootstrap:/template/php/module.php
  *
  * @created   2022-12-17
  * @version   1.0
- * @package   op-module-bootstrap
+ * @package   op-asset-bootstrap
  * @author    Tomoaki Nagahara <tomoaki.nagahara@gmail.com>
  * @copyright Tomoaki Nagahara All right reserved.
  */

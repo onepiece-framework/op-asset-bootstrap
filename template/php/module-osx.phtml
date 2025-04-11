@@ -1,9 +1,9 @@
 <?php
-/** op-module-bootstrap:/php/module-osx.phtml
+/** op-asset-bootstrap:/template/php/module-osx.phtml
  *
  * @created   2018-11-13
  * @version   1.0
- * @package   op-module-bootstrap
+ * @package   op-asset-bootstrap
  * @author    Tomoaki Nagahara <tomoaki.nagahara@gmail.com>
  * @copyright Tomoaki Nagahara All right reserved.
  */
@@ -20,7 +20,7 @@ if( preg_match('/apache/', PHP_SAPI) ){
 }
 ?>
 	<section>
-		<h2 style="margin-left: 0.5em;">MacPorts</h2>
+		<h2>MacPorts</h2>
 		<pre><code><?= null /* PHP Zend Engine will remove EOL. */ ?>
 sudo port install php<?= $v ?>-<?= _OP_APP_BOOTSTRAP_ . PHP_EOL ?>
 sudo port unload <?= $target.PHP_EOL ?>
