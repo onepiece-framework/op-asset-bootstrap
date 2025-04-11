@@ -26,16 +26,14 @@ namespace OP;
 		</header>
 		<hr/>
 		<h1>The onepiece-framework bootstrap was failed.</h1>
-		<ol>
 			<?php
-			while( $notice = Notice::Get() ){
 				//	...
-				echo '<li>'.PHP_EOL;
-				echo $notice['message'].PHP_EOL;
+				/* @var $e \Exception */
+				echo '<h2>'.$e->getMessage().'</h2>'.PHP_EOL;
 
 				//	...
 				echo '<ol>'.PHP_EOL;
-				foreach( $notice['backtrace'] as $backtrace ){
+				foreach( $e->getTrace() as $backtrace ){
 					$file = $backtrace['file']     ?? null;
 					$line = $backtrace['line']     ?? null;
 					$func = $backtrace['function'] ?? null;
@@ -81,17 +79,10 @@ namespace OP;
 					echo "<li>{$file} #{$line} {$order}($argument)</li>".PHP_EOL;
 				}
 				echo '</ol>'.PHP_EOL;
-
-				//	...
-				echo "</li>";
-			}
 			?>
-		</ol>
 		<hr/>
 		<footer>
 			Copyright 2009 onepiece-framework all right reserved
 		</footer>
 	</body>
 </html>
-<?php
-exit(1);
