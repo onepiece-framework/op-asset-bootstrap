@@ -8,17 +8,8 @@
  * @copyright Tomoaki Nagahara All right reserved.
  */
 ?>
-<!doctype html>
-<html>
-	<head>
-		<style>
-		<?php
-		include(__DIR__.'/../style.css');
-		?>
-		</style>
-	</head>
-	<body>
-		<section class="margin left right">
+<?php include(__DIR__.'/../html_head.phtml') ?>
+		<section>
 			<h1>Not initializing git submodule</h1>
 			<p>Execute the following command.</p>
 			<div class="code">
@@ -26,7 +17,4 @@
 				<code>sh ./asset/git/submodule/init.sh</code>
 			</div>
 		</section>
-	</body>
-</html>
-<?php
-exit();
+<?php include(__DIR__.'/../html_foot.phtml') ?>
