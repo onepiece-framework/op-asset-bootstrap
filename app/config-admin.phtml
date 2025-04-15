@@ -12,16 +12,7 @@
 namespace OP;
 
 ?>
-<!doctype html>
-<html>
-	<head>
-		<style>
-		<?php
-		include(__DIR__.'/../style.css');
-		?>
-		</style>
-	</head>
-	<body>
+<?php include(__DIR__.'/../html_head.phtml') ?>
 		<?php
 		//	...
 		$path = ConvertPath('asset:/config/admin.php');
@@ -41,7 +32,4 @@ namespace OP;
 			<p>Configuration is</p>
 			<div class="code"><pre><code><?= $file ?></code></pre></div>
 		</section>
-	</body>
-</html>
-<?php
-exit();
+<?php include(__DIR__.'/../html_foot.phtml') ?>
