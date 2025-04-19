@@ -47,7 +47,7 @@ switch( $webserver ){
 				break;
 			default:
 				//	Has not been setting rewrite.
-				require('asset/boot/template/op/rewrite.phtml');
+				require('asset/bootstrap/template/op/rewrite.phtml');
 				echo "Entry point is {$entry_point}";
 				exit(__LINE__);
 		}
