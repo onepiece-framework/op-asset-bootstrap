@@ -32,6 +32,6 @@ foreach([
 
 	//	...
 	define('_OP_APP_BOOTSTRAP_', $module);
-	require('asset/boot/template/php/module.php');
+	require('asset/bootstrap/template/php/module.php');
 	exit(__LINE__);
 }
