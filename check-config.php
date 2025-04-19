@@ -33,7 +33,7 @@ foreach( [Env::_ADMIN_IP_, Env::_ADMIN_MAIL_] as $key ){
 	//	...
 	if( empty($config[$key]) ){
 		//	...
-		if(!include('asset/boot/template/app/config-admin.phtml') ){
+		if(!require('asset/bootstrap/template/app/config-admin.phtml') ){
 			exit(__LINE__);
 		}
 	}
